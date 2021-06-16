@@ -1,0 +1,16 @@
+.disable{
+  width: 60px;
+  height: 30px;
+  border-radius: 10px;
+  background: gray;
+  color: #fff;
+  padding: 5px 10px;
+}
+.active{
+  width: 60px;
+  height: 30px;
+  border-radius: 10px;
+  background: steelblue;
+  color: #fff;
+  padding: 5px 10px;
+}
