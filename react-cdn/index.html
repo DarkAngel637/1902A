@@ -17,6 +17,7 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script  type="text/babel">
         class List extends React.Component {
+            // 组件内部状态
             state = {list: [1,2,3,4,5,6,7,8,9,10]}
 
             render(){
@@ -24,23 +25,36 @@
                     this.state.list.map(item=>{
                         return <li key={item}>{item}</li>
                     })
-                }{this.props.children}
+                }{this.props.showFooter?this.props.children:null}
                 </ul>   
             }
         }
         // 创建第一个组件
         class App extends React.Component{
+            state = {
+                showFooter: false
+            }
+
+            // 是否渲染底部组件
+            changeShowFooter(){
+                this.setState({
+                    showFooter: !this.state.showFooter
+                })
+            }
+
             // 卸载组件
             mountNode(){
                 ReactDOM.unmountComponentAtNode(document.getElementById('root'))
             }
 
             render(){
+                const {state, props} = this;
                 return <div>
                     <p>第一个React组件</p>    
-                    <List>
+                    <List showFooter={state.showFooter}>
                         <footer>底部组件</footer>    
                     </List>
+                    <button onClick={this.changeShowFooter.bind(this)}>{state.showFooter?'隐藏底部组件':'渲染底部组件'}</button>
                     <button onClick={this.mountNode}>卸载组件</button>
                 </div>
             }
