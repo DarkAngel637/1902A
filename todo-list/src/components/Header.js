@@ -14,7 +14,10 @@ export default class Header extends Component {
     submit(e) {
         if (e.keyCode === 13){
             if (this.state.content){
-                this.props.submitTodo(this.state.content)
+                this.props.submitTodo(this.state.content);
+                this.setState({
+                    content: ''
+                })
             }
         }
     }
