@@ -14,6 +14,23 @@ export default class App extends Component {
     todo: []
   }
 
+  constructor(props){
+    super();
+    console.log('constructor...');
+    this.wrap = React.createRef();
+  }
+
+  componentWillMount(){
+    console.log('componentWillMount', this.wrap.current);
+    setTimeout(() =>{
+      console.log('componentWillMount time out', this.wrap.current);
+    });
+  }
+
+  componentDidMount(){
+    console.log('componentDidMount', this.wrap.current);
+  }
+
   submitTodo(content){
     this.setState({
       todo: [...this.state.todo, {id: +new Date, content, finish: false}]
@@ -42,19 +59,24 @@ export default class App extends Component {
     })
   }
 
-  // 获取未完成列表
+  // // 获取未完成列表
   get unfinishList(){
     return this.state.todo.filter(item=>item.finish===false)
   }
 
-  // 获取完成列表
+  // // 获取完成列表
   get finishList(){
     return this.state.todo.filter(item=>item.finish===true)
   }
 
   render() {
+    // let unfinishList =  this.state.todo.filter(item=>item.finish===false),
+      // finishList = this.state.todo.filter(item=>item.finish===true);
+
+    console.log('render...');
+    
     return (
-      <div>
+      <div ref={this.wrap}>
         <Header submitTodo={this.submitTodo.bind(this)}></Header>
         <List 
           title="正在进行" 

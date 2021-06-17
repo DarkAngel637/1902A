@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 
 export default class Header extends Component {
+    constructor(props) {
+        super();
+
+        this.changeContent = this.changeContent.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+
     state = {
         content: ''
     }
 
     changeContent(e) {
+        console.log('this...', this)
         this.setState({
             content: e.target.value
         })
@@ -28,8 +36,9 @@ export default class Header extends Component {
                 <span>ToDoList</span>
                 <input 
                     value={this.state.content} 
-                    onChange={this.changeContent.bind(this)}
-                    onKeyDown={this.submit.bind(this)}
+                    // onChange={()=>this.changeContent()}
+                    onChange={this.changeContent}
+                    onKeyDown={this.submit.bind}
                 />
             </div>
         )
