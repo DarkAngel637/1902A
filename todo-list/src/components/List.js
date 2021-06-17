@@ -39,7 +39,6 @@
 // 视图组件 - 函数式组件
 
 export default function List(props){
-
     function changeState(e, id){
         console.log('e....', e , id);
         props.changeTodoFinish(e.target.checked, id);
@@ -48,7 +47,7 @@ export default function List(props){
     function deleteTodo(id){
         props.deleteTodo(id);
     }
-    
+
     return (
         <div>
             <p>
