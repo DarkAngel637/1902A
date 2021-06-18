@@ -1,7 +1,43 @@
-.province{
 
+html,body,#root{
+  height: 100%;
 }
-
+ul,li{
+  list-style: none;
+}
+.wrap{
+  display: flex;
+  height: 100%;
+  background: #567391;
+}
+.province, .city{
+  height:100%;
+  overflow-y: scroll;
+}
+.province{
+  width: 40%;
+}
+.province li{
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  background: #fff;
+}
 .province .active{
-  background: rgb(194, 157, 53)
+  background: rgb(194, 157, 53);
+}
+.city{
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.city span{
+  border: 2px solid #fff;
+  padding: 3px 6px;
+  margin: 6px;  
+}
+.city span.active{
+  background: rgb(194, 157, 53);
 }

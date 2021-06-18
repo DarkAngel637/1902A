@@ -6,20 +6,46 @@ export default class City extends Component {
         citys: []
     }
 
+    // 当props改变当时候
     async componentWillReceiveProps(props){
+        if (this.props.curProvinceId === props.curProvinceId){
+            return;
+        }
         let result = await axios(`http://baojia.chelun.com/v1-city-alllist.html?provinceid=${props.curProvinceId}`);
-        console.log('city props...', arguments, result);
         this.setState({
             citys: result.data.data
         })
     }
 
+    async componentDidMount(){
+        let result = await axios(`http://baojia.chelun.com/v1-city-alllist.html?provinceid=${this.props.curProvinceId}`);
+        this.setState({
+            citys: result.data.data
+        })
+    }
+
+    // 判断组件是否需要更新
+    shouldComponentUpdate(nextProps, nextState){
+        // if (!this.state.citys.length || !nextState.citys.length){
+        //     return true;
+        // }
+        // if (nextState.citys[0].ParentID === this.state.citys[0].ParentID){
+        //     return false;
+        // }
+        return true;
+    }
+
     render() {
         const {citys} = this.state;
+        console.log('render...', this.props, this.props.selectedCity);
         return (
-            <div>{
+            <div className="city">{
                 citys.map(item=>{
-                    return <span key={item.CityID}>{item.CityName}</span>
+                    return <span 
+                                className={this.props.selectedCity.indexOf(item.CityName)===-1?'':'active'}
+                                onClick={()=>this.props.selectCity(item.CityName, item.ParentID)} 
+                                key={item.CityID}
+                            >{item.CityName}</span>
                 })
             }</div>
         )

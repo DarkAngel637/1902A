@@ -13,6 +13,7 @@ export default function Province(props) {
                 key={item.CityID} 
                 onClick={()=>selectProvince(item.CityID)}>
                 <span>{item.CityName}</span>
+                {item.selectedCity.length?<span>{item.selectedCity.length}</span>:null}
             </li>
         })}</div>
     )
