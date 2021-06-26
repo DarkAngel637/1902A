@@ -7,8 +7,8 @@ import {HashRouter, BrowserRouter} from 'react-router-dom'
 
 ReactDOM.render(
   // 把路由模式包裹到跟组件外部
-  <HashRouter>
+  <BrowserRouter>
     <App />
-  </HashRouter>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
