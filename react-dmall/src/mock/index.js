@@ -7,7 +7,7 @@ Mock.mock(/\/home\/swiper/, function(){
     return swiper
 })
 Mock.mock('/goods/list', (req, res)=>{
-    return JSON.parse(goods)
+    return goods
 })
 Mock.mock('/goods/:id', 'GET', (req, res)=>{
 
