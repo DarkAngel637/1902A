@@ -22,7 +22,7 @@ const footerJSON = [{
 export default class Main extends Component {
     render() {
         return (
-            <div>
+            <div style={{height: '100%'}}>
                 <Switch>
                     <Route path="/main/home" component={Home}/>
                     <Route path="/main/classify" component={Classify}/>

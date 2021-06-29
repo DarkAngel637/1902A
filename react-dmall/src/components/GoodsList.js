@@ -1,17 +1,29 @@
 import React, { Component } from 'react'
+import {withRouter} from 'react-router-dom'
+import './GoodsList.css'
 
-export default class GoodsList extends Component {
+class GoodsList extends Component {
+    // 跳转详情
+    goDetail(id){
+        this.props.history.push(`/detail/${id}`)
+    }
+
+    // 添加到购物车
+    addCart(e, id){
+        e.stopPropagation()
+    }
+
     render() {
         return (
-            <ul>{this.props.list.map(item=>{
-                return <li key={item.id}>
+            <ul className="goodsIndex">{this.props.list.map(item=>{
+                return <li key={item.id} onClick={()=>this.goDetail(item.id)}>
                     <img src={item.image} alt="" />
-                    <div>
+                    <div className="goodsChildren">
                         <p>{item.name}</p>
                         <p>{item.tag}</p>
                         <p>
                             <span>¥{item.price}</span>
-                            <span>+</span>
+                            <span onClick={(e)=>this.addCart(e, item.id)}>+</span>
                         </p>
                     </div>
                 </li>
@@ -19,3 +31,5 @@ export default class GoodsList extends Component {
         )
     }
 }
+
+export default withRouter(GoodsList)

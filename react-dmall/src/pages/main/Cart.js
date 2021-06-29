@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import withLogin from '../../hoc/withLogin'
 
-export default class Cart extends Component {
+class Cart extends Component {
     render() {
         return (
             <div>
@@ -9,3 +10,5 @@ export default class Cart extends Component {
         )
     }
 }
+
+export default withLogin(Cart);

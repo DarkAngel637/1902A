@@ -37,7 +37,7 @@ export default class Classify extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{display: 'flex',height: '100%',paddingBottom: '50px',boxSizing: 'border-box'}}>
                 <Category 
                     categories={this.state.categories} 
                     categoryIndex={this.state.categoryIndex}
