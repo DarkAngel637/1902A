@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import Category from '../../components/Category'
-import GoodsList  from '../../components/GoodsList'
+import GoodsList from '../../components/GoodsList'
+import CartContext from '../../context/cartContext'
+
 
 export default class Classify extends Component {
     constructor(props) {
@@ -10,41 +11,33 @@ export default class Classify extends Component {
     }
 
     state = {
-        list: [],
         categories: [],
         categoryIndex: 0
     }
 
-    async componentDidMount(){
-        let result = await axios('/goods/list');
-        console.log('result...', result);
-        let categories = [...new Set(result.data.map(item=>item.category))];
-        this.setState({ 
-            categories,
-            list: result.data
-        })
-    }
-
-    get curList(){
-        return this.state.list.filter(item=>item.category === this.state.categories[this.state.categoryIndex]);
-    }
-
-    changeCategoryIndex(index){
-        this.setState({ 
+    changeCategoryIndex(index) {
+        this.setState({
             categoryIndex: index
         })
     }
 
     render() {
+        console.log('props...', this.props)
         return (
-            <div style={{display: 'flex',height: '100%',paddingBottom: '50px',boxSizing: 'border-box'}}>
-                <Category 
-                    categories={this.state.categories} 
-                    categoryIndex={this.state.categoryIndex}
-                    changeCategoryIndex={this.changeCategoryIndex}
-                />
-                <GoodsList list={this.curList}/>
-            </div>
+            // 通过context的consumer拿到list属性和changeNum方法
+            <CartContext.Consumer>{
+            value => {
+                let categories = [...new Set(value.list.map(item=>item.category))];
+                let curList = value.list.filter(item => item.category === categories[this.state.categoryIndex]);
+                return <div style={{ display: 'flex', height: '100%', paddingBottom: '50px', boxSizing: 'border-box' }}>
+                    <Category
+                        categories={categories}
+                        categoryIndex={this.state.categoryIndex}
+                        changeCategoryIndex={this.changeCategoryIndex}
+                    />
+                    <GoodsList list={curList} />
+                </div>
+            }}</CartContext.Consumer>
         )
     }
 }
