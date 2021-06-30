@@ -1,0 +1,10 @@
+.letter{
+    position: fixed;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+}
+.letter li{
+    text-align: center;
+    height: 20px;
+}
