@@ -17,7 +17,7 @@ export default class Brand extends Component {
                         <p id={item}>{item}</p>
                         <ul>{
                             this.props.brandList[item].map(value=>{
-                                return <li key={value.Spelling}>
+                                return <li key={value.Spelling} onClick={()=>this.props.changeCurBrand(value.MasterID)}>
                                     <img src={value.CoverPhoto} alt=""/>
                                     <span>{value.Name}</span>
                                 </li>

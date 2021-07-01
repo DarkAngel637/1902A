@@ -2,18 +2,23 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Letter from '../../components/Letter'
 import Brand from '../../components/Brand'
+import Dialog from '../../components/Dialog'
 
 export default class Car extends Component {
 
     constructor(props) {
         super(props)
         this.changCurLetter = this.changCurLetter.bind(this);
+        this.changeCurBrand = this.changeCurBrand.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
     }
 
     state = {
-        letterList: [],
-        brandList: [],
-        curLetter: ''
+        letterList: [], // 品牌首字母列表
+        brandList: [],  // 品牌列表
+        curLetter: '',  // 当前选中品牌首字母
+        curBrandId: '', // 当前选中品牌
+        showDialog: false   // 是否展示弹框
     }
 
     async componentDidMount(){
@@ -44,12 +49,30 @@ export default class Car extends Component {
         })
     }
 
+    changeCurBrand(brandId){
+        this.setState({
+            curBrandId: brandId,
+            showDialog: true
+        }, ()=>{
+            this.props.history.push(`/main/car/sale/${brandId}`)
+        })
+    }
+
+    closeDialog(){
+        this.setState({
+            showDialog: false
+        })
+    }
+
     render() {
-        let {letterList, brandList, curLetter} = this.state;
+        let {letterList, brandList, curLetter, showDialog, curBrandId} = this.state;
         return (
             <div style={{height: '100%',boxSizing: 'border-box', paddingBottom: '50px'}}>
-                <Brand brandList={brandList} curLetter={curLetter}/>
+                <Brand brandList={brandList} curLetter={curLetter} changeCurBrand={this.changeCurBrand}/>
                 <Letter letterList={letterList} changCurLetter={this.changCurLetter}/>
+
+                {/* 车型弹窗 */}
+                {showDialog && <Dialog closeDialog={this.closeDialog} curBrandId={curBrandId} routes={this.props.routes}></Dialog>}
             </div>
         )
     }

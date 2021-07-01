@@ -9,6 +9,10 @@ import Car from '../pages/main/Car'
 import City from '../pages/main/City'
 import My from '../pages/main/My'
 
+// 三级路由
+import Sale from '../pages/main/car/Sale'
+import SaleAll from '../pages/main/car/All'
+
  const config = {
     routes: [{
         path: '/main',
@@ -21,7 +25,14 @@ import My from '../pages/main/My'
             component: Topic
         }, {
             path: '/main/car',
-            component: Car
+            component: Car,
+            children: [{
+                path: '/main/car/sale/:id?',
+                component: Sale
+            }, {
+                path: '/main/car/all/:id?',
+                component: SaleAll
+            }]
         }, {
             path: '/main/my',
             component: My
