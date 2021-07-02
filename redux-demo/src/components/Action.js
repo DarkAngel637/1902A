@@ -9,10 +9,10 @@ export default class Action extends Component {
         return (
             <div>
                 <button onClick={()=>dispatch({
-                    type: 'ADD'
+                    type: 'ADD_NUM'
                 })}>+</button>
                 <button onClick={()=>dispatch({
-                    type: 'SUB'
+                    type: 'SUB_NUM'
                 })}>-</button>
             </div>
         )

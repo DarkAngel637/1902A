@@ -8,7 +8,7 @@ export default class Num extends Component {
         let state = store.getState();
         return (
             <div>
-                <span>当前数字：{state.num}</span>
+                <span>当前数字：{state.num.num}</span>
             </div>
         )
     }
