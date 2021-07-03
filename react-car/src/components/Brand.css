@@ -19,6 +19,7 @@
     border-bottom: none;
 }
 .brand img{
+    width: 45px;
     height: 45px;
     margin-right: 45px;
 }

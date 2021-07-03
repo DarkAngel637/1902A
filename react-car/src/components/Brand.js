@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Brand.css'
+import LazyLoad from './LazyLoad';
 
 export default class Brand extends Component {
     componentWillReceiveProps(nextProps) {
@@ -11,21 +12,23 @@ export default class Brand extends Component {
 
     render() {
         return (
-            <div className="brand">{
-                Object.keys(this.props.brandList).map(item=>{
-                    return <section key={item}>
-                        <p id={item}>{item}</p>
-                        <ul>{
-                            this.props.brandList[item].map(value=>{
-                                return <li key={value.Spelling} onClick={()=>this.props.changeCurBrand(value.MasterID)}>
-                                    <img src={value.CoverPhoto} alt=""/>
-                                    <span>{value.Name}</span>
-                                </li>
-                            })    
-                        }</ul>
-                    </section>
-                })
-            }</div>
+            <LazyLoad>
+                 <div className="brand">{
+                    Object.keys(this.props.brandList).map(item=>{
+                        return <section key={item}>
+                            <p id={item}>{item}</p>
+                            <ul>{
+                                this.props.brandList[item].map(value=>{
+                                    return <li key={value.Spelling} onClick={()=>this.props.changeCurBrand(value.MasterID)}>
+                                        <img data-src={value.CoverPhoto} alt=""/>
+                                        <span>{value.Name}</span>
+                                    </li>
+                                })    
+                            }</ul>
+                        </section>
+                    })
+                }</div>
+            </LazyLoad>
         )
     }
 }
