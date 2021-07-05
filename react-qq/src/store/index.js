@@ -21,6 +21,12 @@ function reducer(state = initialState, action){
             friendList[index].isTop = !friendList[index].isTop;
             return {...state, friendList};
         }
+        case "DELETE_FRIEND": {
+            let friendList = [...state.friendList];
+            let index = state.friendList.findIndex(item=>item.id === action.payload)
+            friendList.splice(index, 1);
+            return {...state, friendList};
+        }
         default:
             return state;
     }

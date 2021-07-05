@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { PullToRefresh, SwipeAction } from 'antd-mobile';
+import {NavLink} from 'react-router-dom'
 
 class FriendList extends Component {
     state = {
@@ -11,7 +12,13 @@ class FriendList extends Component {
 
     render() {
         let newFriendList = [...this.props.friendList];
-        newFriendList.sort((a, b)=>b.isTop-a.isTop);
+        newFriendList.sort((a, b)=>{
+            if (a.isTop === b.isTop){
+                return b.lastTime - a.lastTime;
+            }else{
+                return b.isTop - a.isTop;
+            }
+        })
 
         return (
             <PullToRefresh
@@ -45,17 +52,17 @@ class FriendList extends Component {
                         },
                         {
                             text: '删除',
-                            onPress: () => console.log('delete'),
+                            onPress: () => this.props.deleteFriend(item.id),
                             style: { backgroundColor: '#F4333C', color: 'white' },
                         },
                     ]}>
-                        <li className="friend" style={{background: item.isTop?'#ccc': '#fff'}}>
+                        <NavLink to={`/detail/${item.id}`} className="friend" style={{background: item.isTop?'#ccc': '#fff'}}>
                             <p>
                                 <span>{item.name}</span>
                                 <span>{item.lastTime}</span>
                             </p>
                             {!item.isRead && <span>{item.unRead}</span>}
-                        </li>
+                        </NavLink>
                     </SwipeAction>
 
                 })
@@ -80,6 +87,12 @@ const mapDispatchToProps = dispatch =>{
         changeTop: payload=>{
             dispatch({
                 type: 'CHANGE_TOP',
+                payload
+            })
+        },
+        deleteFriend: payload=>{
+            dispatch({
+                type: 'DELETE_FRIEND',
                 payload
             })
         }

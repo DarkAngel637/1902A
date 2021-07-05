@@ -115,8 +115,15 @@ module.exports = function (proxy, allowedHost) {
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);
       }
+      // 联系人列表接口
       app.get('/userlist', (req, res)=>{
         res.json(friendList)
+      })
+      // 聊天想请接口
+      app.get(/\/message/, (req, res)=>{
+        let id = req.url.split('/')[2];
+        let index = friendList.findIndex(item=>item.id === id);
+        res.json(friendList[index]);
       })
     },
     after(app) {

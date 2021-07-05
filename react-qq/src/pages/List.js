@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux';
 import FriendList from '../components/FriendList'
+import MessageTip from '../components/MessageTip'
+
+// 引入高阶组件WithScroll
+// import WithScroll from '../hoc/withScroll'
 
 class List extends Component {
     async componentDidMount(){
@@ -14,6 +18,7 @@ class List extends Component {
         return (
             <div>
                 <FriendList />
+                <MessageTip />
             </div>
         )
     }
@@ -29,4 +34,8 @@ const mapDispatchToProps = dispatch =>{
         }
     }
 }
+const scorllEvent = page=>{
+
+}
 export default connect(null, mapDispatchToProps)(List)
+// export default connect(null, mapDispatchToProps)(WithScroll(scorllEvent)(List))
