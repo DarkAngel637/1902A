@@ -3,15 +3,26 @@ import Main from '../pages/Main'
 import Detail from '../pages/Detail'
 
 // 二级路由
-import Home from '../pages/main/Home'
-import Topic from '../pages/main/Topic'
-import Car from '../pages/main/Car'
-import City from '../pages/main/City'
-import My from '../pages/main/My'
+// import Home from '../pages/main/Home'
+// import Topic from '../pages/main/Topic'
+// import Car from '../pages/main/Car'
+// import City from '../pages/main/City'
+// import My from '../pages/main/My'
+
+// 二级路由懒加载
+const Home = ()=>import('../pages/main/Home')
+const Topic = ()=>import('../pages/main/Topic')
+const Car = ()=>import('../pages/main/Car')
+const City = ()=>import('../pages/main/City')
+const My = ()=>import('../pages/main/My')
 
 // 三级路由
-import Sale from '../pages/main/car/Sale'
-import SaleAll from '../pages/main/car/All'
+// import Sale from '../pages/main/car/Sale'
+// import SaleAll from '../pages/main/car/All'
+
+// 三级路由懒加载
+const Sale = ()=>import('../pages/main/car/Sale')
+const SaleAll = ()=>import('../pages/main/car/All')
 
  const config = {
     routes: [{
