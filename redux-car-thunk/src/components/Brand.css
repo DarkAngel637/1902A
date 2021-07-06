@@ -1,0 +1,25 @@
+.brand p{
+    margin: 0;
+    height: 20px;
+    background: #cccc;
+    font-size: 20px;
+    padding: 5px 0 5px 10px;
+}
+.brand ul{
+    margin: 0;
+    padding: 0 10px;
+}
+.brand li{
+    padding: 5px 0;
+    display:flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+.brand li:last-child{ 
+    border-bottom: none;
+}
+.brand img{
+    width: 45px;
+    height: 45px;
+    margin-right: 45px;
+}
