@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { PullToRefresh, SwipeAction } from 'antd-mobile';
+import { SwipeAction } from 'antd-mobile';
 import {NavLink} from 'react-router-dom'
+import store from '../store'
+import axios from 'axios'
+
+// 引入高阶组件WithScroll
+import WithScroll from '../hoc/withScroll'
 
 class FriendList extends Component {
     state = {
-        down: false,
-        height: document.documentElement.clientHeight,
-        refreshing: false
     }
 
     render() {
@@ -21,23 +23,7 @@ class FriendList extends Component {
         })
 
         return (
-            <PullToRefresh
-                damping={60}
-                ref={el => this.ptr = el}
-                style={{
-                    height: this.state.height,
-                    overflow: 'auto',
-                }}
-                indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
-                direction={this.state.down ? 'down' : 'up'}
-                refreshing={this.state.refreshing}
-                onRefresh={() => {
-                    this.setState({ refreshing: true });
-                    setTimeout(() => {
-                        this.setState({ refreshing: false });
-                    }, 1000);
-                }}
-            >{
+            <div>{
                 newFriendList.map(item => {
                     return <SwipeAction key={item.id} right={[
                         {
@@ -66,7 +52,7 @@ class FriendList extends Component {
                     </SwipeAction>
 
                 })
-            }</PullToRefresh>
+            }</div>
         )
     }
 }
@@ -98,4 +84,23 @@ const mapDispatchToProps = dispatch =>{
         }
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(FriendList)
+
+async function getData(page){
+    let result = await axios.get(`/userlist?page=${page}`);
+    let payload = [];
+    if (page === 1){
+        payload = result.data;
+    }else{
+        payload = [...store.getState().friendList, ...result.data];
+    }
+    store.dispatch({
+        type: 'GET_FRIEND_LIST',
+        payload
+    })
+    return payload;
+}
+const scorllEvent = page=>{
+    return getData(page);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WithScroll(scorllEvent)(FriendList))

@@ -117,7 +117,8 @@ module.exports = function (proxy, allowedHost) {
       }
       // 联系人列表接口
       app.get('/userlist', (req, res)=>{
-        res.json(friendList)
+        let page = Number(req.query.page);
+        res.json(friendList.slice(page*30, (page+1)*30))
       })
       // 聊天想请接口
       app.get(/\/message/, (req, res)=>{

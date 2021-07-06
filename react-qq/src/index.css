@@ -93,3 +93,9 @@ ul,li{
 .receiver{
   align-items: flex-start;
 }
+.bs-wrapper{
+  height: 100%;
+}
+#root>div{
+  height: 100%;
+}

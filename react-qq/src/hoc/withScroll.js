@@ -60,7 +60,7 @@ export default function withScroll(pullEvent){
                 let {list} = this.state;
 
                 return <div className="bs-wrapper">
-                    <WrapComponent list={list}></WrapComponent>
+                    <WrapComponent list={list} {...this.props}></WrapComponent>
                 </div>
             }
         }
