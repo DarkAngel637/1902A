@@ -1,0 +1,37 @@
+/* 引入antd样式 */
+@import '~antd/dist/antd.css';
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.logo {
+  width: 16em;
+  height: 10vh;
+  min-height: 64px;
+  background-image: url(http://172.16.10.111:8083/exam_admin/resources/images/loginLogoNew.png);
+  background-size: 100%;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  background-repeat: no-repeat;
+  background-position: 0 -125px;
+  float: left;
+}
+
+.ant-row-rtl #components-layout-demo-top-side-2 .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.site-layout-background {
+  background: #fff;
+}
