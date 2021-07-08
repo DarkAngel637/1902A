@@ -9,6 +9,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root{
+  height: 100%;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -34,4 +37,11 @@ code {
 
 .site-layout-background {
   background: #fff;
+}
+
+.login-wrap{
+  width: 40%;
+  position: absolute;
+  top: 30vh;
+  right: 10vw;
 }

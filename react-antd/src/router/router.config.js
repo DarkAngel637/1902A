@@ -13,6 +13,12 @@ import Login from '../pages/Login'
 
 // 二级路由懒加载
 const Table = loadable(()=>import('../pages/main/Table'))
+const Tree = loadable(()=>import('../pages/main/Tree'))
+const Bar = loadable(()=>import('../pages/main/Bar'))
+const Candle = loadable(()=>import('../pages/main/Candle'))
+
+
+
 // const Topic = ()=>import('../pages/main/Topic')
 // const Car = ()=>import('../pages/main/Car')
 // const City = ()=>import('../pages/main/City')
@@ -29,6 +35,15 @@ const Table = loadable(()=>import('../pages/main/Table'))
         children: [{
             path: '/main/table',
             component: Table
+        }, {
+            path: '/main/tree',
+            component: Tree
+        }, {
+            path: '/main/bar',
+            component: Bar
+        }, {
+            path: '/main/candle',
+            component: Candle
         }, {
             from: '/main',
             to: '/main/table'
