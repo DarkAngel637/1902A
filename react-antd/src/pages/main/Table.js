@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Button, message, Modal, Form, Input } from 'antd'
 
+const { Search } = Input;
 const { confirm } = Modal;
 const dataSource = [
     {
@@ -72,15 +73,17 @@ const dataSource = [
 ];
 
 
-
 export default class MyTable extends Component {
     constructor(props) {
         super(props);
         this.handleCancel = this.handleCancel.bind(this);
         this.submit = this.submit.bind(this);
+        this.onSearch = this.onSearch.bind(this);
+        this.addItem = this.addItem.bind(this);
     }
 
     state = {
+        rawData: dataSource,
         dataSource,
         visible: false,
         current: {}
@@ -109,66 +112,102 @@ export default class MyTable extends Component {
                             current: row
                         })
                     }}>编辑</Button>
-                    <Button danger style={{ marginLeft: 10 }} onClick={() =>{
-                        message.error(`你没有权限删除${row.name}`);
+                    <Button danger style={{ marginLeft: 10 }} onClick={() => {
                         confirm({
                             title: 'Do you want to delete these items?',
                             content: 'When clicked the OK button, this dialog will be closed after 1 second',
-                            onOk:()=>{
-                                let index = this.state.dataSource.findIndex(item=>item.key === row.key);
+                            onOk: () => {
+                                let index = this.state.dataSource.findIndex(item => item.key === row.key);
                                 let dataSource = [...this.state.dataSource];
                                 dataSource.splice(index, 1);
                                 this.setState({
                                     dataSource
+                                }, ()=>{
+                                    message.error(`删除${row.name}成功`);
                                 })
                             },
-                            onCancel() {},
-                          });
-                    } }>删除</Button>
+                            onCancel() { },
+                        });
+                    }}>删除</Button>
                 </div>
             }
         },
     ];
 
-    handleCancel(){
+    handleCancel() {
         this.setState({
             visible: false
         })
-    } 
-    submit(values){
-        console.log('values...', values, this);
-        let {key} = values
-        let index = this.state.dataSource.findIndex(item=>item.key === key);
+    }
+    submit(values) {
+        let { key } = values;
         let dataSource = [...this.state.dataSource]
-        dataSource[index] = {...dataSource[index], ...values}
+        if (key){
+            // 编辑数据
+            let index = this.state.dataSource.findIndex(item => item.key === key);
+            dataSource[index] = { ...dataSource[index], ...values }
+            message.success('修改数据成功')
+        }else{
+            // 添加数据
+            key = dataSource[dataSource.length - 1].key*1+1;
+            dataSource.push({...values, key});
+            message.success('添加数据成功')
+        }
+       
         this.setState({
+            rawData: dataSource,
             dataSource,
-            visible: false
+            visible: false,
+            current: {}
+        })
+    }
+
+    onSearch(keyWord) {
+        let dataSource = [...this.state.rawData]
+        dataSource = dataSource.filter(item=>item.name.indexOf(keyWord) !== -1)
+        this.setState({
+            dataSource
+        })
+    }
+
+    addItem(){
+        this.setState({
+            visible: true,
+            current: {}
         })
     }
 
     render() {
-        let { visible, dataSource } = this.state
+        let { visible, dataSource, current } = this.state
         return (
             <div>
+                <Button type="primary" onClick={this.addItem}>新增</Button>
+                <Search
+                    style={{width:'30%', float: 'right'}}
+                    placeholder="input search text"
+                    allowClear
+                    enterButton="Search"
+                    size="middle"
+                    onSearch={this.onSearch}
+                />
                 <Table dataSource={dataSource} columns={this.columns} />
-                <Modal title="编辑数据" visible={visible} onOk={this.handleOk} onCancel={this.handleCancel} footer={null}>
-                    <Form 
-                        initialValues={this.state.current} 
+                <Modal title={current.key?'编辑数据':'新增数据'} visible={visible} onOk={this.handleOk} onCancel={this.handleCancel} footer={null}>
+                    <Form
+                        initialValues={this.state.current}
                         key={JSON.stringify(this.state.current)}
                         onFinish={this.submit}
-                        >
+                    >
                         <Form.Item name="key" hidden>
-                            <Input/>
+                            <Input />
                         </Form.Item>
-                        <Form.Item name="name" label="用户姓名" rules={[{required: true, message: '用户姓名不能为空!'}]}>
-                            <Input/>
+                        <Form.Item name="name" label="用户姓名" rules={[{ required: true, message: '用户姓名不能为空!' }]}>
+                            <Input />
                         </Form.Item>
-                        <Form.Item name="age" label="用户年龄" rules={[{required: true, message: '用户年龄不能为空!'},{pattern: /^\d{1,2}$/, message: '用户年龄非法!'}]}>
-                            <Input/>
+                        <Form.Item name="age" label="用户年龄" rules={[{ required: true, message: '用户年龄不能为空!' }, { pattern: /^\d{1,2}$/, message: '用户年龄非法!' }]}>
+                            <Input />
                         </Form.Item>
-                        <Form.Item name="address" label="用户住址" rules={[{required: true, message: '用户住址不能为空!'}]}>
-                            <Input/>
+                        <Form.Item name="address" label="用户住址" rules={[{ required: true, message: '用户住址不能为空!' }]}>
+                            <Input />
                         </Form.Item>
                         <Button type="primary" htmlType="submit">
                             Submit
